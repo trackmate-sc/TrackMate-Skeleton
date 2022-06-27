@@ -73,6 +73,7 @@ public class SkelUtils {
 		SkeletonCreator<BitType> skelmake = new SkeletonCreator<BitType>(imgLabeling, ij.op());
 		ArrayList<RandomAccessibleInterval<BitType>> skels =  skelmake.getSkeletons();
 		ArrayList<RealLocalizable> endPoints = new ArrayList<RealLocalizable>();
+		final List< Spot > spots = new ArrayList<>(  );
 		for (RandomAccessibleInterval<BitType> skeleton : skels) {
 
 			SkeletonAnalyzer<BitType> skelanalyze = new SkeletonAnalyzer<BitType>(skeleton, ij.op());
@@ -92,6 +93,18 @@ public class SkelUtils {
 
 					endPoints.add(addPoint);
 
+					final double x = calibration[ 0 ] * ( interval.min( 0 ) + addPoint.getDoublePosition(0) );
+					final double y = calibration[ 1 ] * ( interval.min( 1 ) + addPoint.getDoublePosition(1) );
+					double z = calibration[ 2 ] * ( interval.min( 2 ) );
+					if(addPoint.numDimensions() > 2 ) {
+					 z = calibration[ 2 ] * ( interval.min( 2 ) + addPoint.getDoublePosition(2) ); 
+					}
+					double volume = 5;
+					for ( int d = 0; d < calibration.length; d++ )
+						if ( calibration[ d ] > 0 )
+							volume *= calibration[ d ];
+					
+					spots.add( new Spot( x, y, z, volume, 5 ) );
 				}
 
 			}
