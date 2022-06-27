@@ -8,6 +8,7 @@ import org.scijava.app.StatusService;
 import org.scijava.log.LogService;
 import org.scijava.options.OptionsService;
 
+import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Spot;
 import fiji.plugin.trackmate.SpotCollection;
 import fiji.plugin.trackmate.util.TMUtils;
@@ -29,13 +30,11 @@ public class Btrackrunner {
 	public static < T extends RealType< T > & NativeType< T > > SpotCollection run(
 			final ImgPlus< T > input,
 			final Interval interval,
-			final double[] calibration
+			final double[] calibration,
+			final Logger logger
 			) throws IOException
 	{
 
-		final LogService logService = context.getService( LogService.class );
-		final StatusService statusService = context.getService( StatusService.class );
-		final OptionsService optionService = context.getService( OptionsService.class );
 		final int numThreads = Runtime.getRuntime().availableProcessors();
 		/*
 		 * Properly set the image to process: crop it.
@@ -49,8 +48,11 @@ public class Btrackrunner {
 		final SpotCollection spots = new SpotCollection();
 		final int timeIndex = cropped.dimensionIndex( Axes.TIME );
 		final int t0 = interval.numDimensions() > 2 ? ( int ) interval.min( 2 ) : 0;
+		
+		logger.log("Running Skeletonization");
 		for ( int t = 0; t < cropped.dimension( timeIndex ); t++ )
 		{
+			logger.setProgress(t);
 			final List< Spot > spotsThisFrame;
 			final RandomAccessibleInterval< T > imageThisFrame = TMUtils.hyperSlice( cropped, 0, t );
 

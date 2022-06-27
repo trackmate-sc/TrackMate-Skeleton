@@ -4,6 +4,7 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 
+import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Model;
 import fiji.plugin.trackmate.Settings;
 import fiji.plugin.trackmate.gui.components.ConfigurationPanel;
@@ -18,11 +19,14 @@ public abstract class BtrackDetectorBaseConfigurationPanel extends Configuration
 	protected final Settings settings;
 
 	protected final Model model;
+	
 
-	public BtrackDetectorBaseConfigurationPanel( final Settings settings, final Model model )
+
+	public BtrackDetectorBaseConfigurationPanel( final Settings settings, final Model model  )
 	{
 		this.settings = settings;
 		this.model = model;
+		
 	}
 
 	protected abstract BtrackDetectorFactory< ? > getDetectorFactory();

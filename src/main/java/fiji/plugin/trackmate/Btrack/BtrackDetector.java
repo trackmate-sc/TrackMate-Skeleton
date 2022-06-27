@@ -2,6 +2,7 @@ package fiji.plugin.trackmate.Btrack;
 
 import java.io.IOException;
 
+import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.SpotCollection;
 import fiji.plugin.trackmate.detection.SpotGlobalDetector;
 import net.imagej.ImgPlus;
@@ -25,16 +26,20 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 	
 	protected String errorMessage;
 	
+	private final Logger logger;
+	
 	protected long processingTime;
 	
 	protected SpotCollection spots;
 	
 	public BtrackDetector(final ImgPlus< T > img,
 			final Interval interval,
-			final double[] calibration) {
+			final double[] calibration,
+			final Logger logger ) {
 		    this.img = img;
 		    this.interval = interval;
 		    this.calibration = calibration;
+		    this.logger = ( logger == null ) ? Logger.VOID_LOGGER : logger;
 		    this.baseErrorMessage = BASE_ERROR_MESSAGE;
 		
 	}
@@ -62,7 +67,7 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 		
 		
 		try {
-			spots = Btrackrunner.run(img, interval, calibration);
+			spots = Btrackrunner.run(img, interval, calibration, logger);
 		} catch (IOException e) {
 		
 			e.printStackTrace();

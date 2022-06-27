@@ -74,7 +74,7 @@ public class BtrackDetectorConfigurationPanel extends BtrackDetectorBaseConfigur
 	/**
 	 * Create the panel.
 	 */
-	public BtrackDetectorConfigurationPanel( final Settings settings, final Model model )
+	public BtrackDetectorConfigurationPanel( final Settings settings, final Model model)
 	{
 		super( settings, model );
 		this.prefService = TMUtils.getContext().getService( PrefService.class );

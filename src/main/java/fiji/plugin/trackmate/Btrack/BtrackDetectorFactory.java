@@ -32,6 +32,7 @@ import static fiji.plugin.trackmate.util.TMUtils.checkMapKeys;
 import static fiji.plugin.trackmate.util.TMUtils.checkParameter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import javax.swing.ImageIcon;
 import org.jdom2.Element;
 import org.scijava.plugin.Plugin;
 
+import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Model;
 import fiji.plugin.trackmate.Settings;
 import fiji.plugin.trackmate.detection.SpotDetectorFactory;
@@ -64,7 +66,7 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 	 * CONSTANTS
 	 */
 
-	
+	public static final String KEY_LOGGER = "LOGGER";
 	/** A string key identifying this factory. */
 	public static final String DETECTOR_KEY = "BTRACK_DETECTOR";
 
@@ -90,6 +92,8 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 	protected Map< String, Object > settings;
 
 	protected String errorMessage;
+	
+
 
 	/*
 	 * METHODS
@@ -101,12 +105,14 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 		final double[] calibration = TMUtils.getSpatialCalibration( img );
 	
 		final ImgPlus< T > imFrame = prepareImg();
-	
-
+		
+        
+		final Logger logger = ( Logger ) settings.get( KEY_LOGGER );
 		final BtrackDetector< T > detector = new BtrackDetector<>(
 				imFrame,
 				interval,
-				calibration);
+				calibration,
+				logger);
 		return detector;
 	}
 
@@ -175,7 +181,7 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 	{
 		final Map< String, Object > settings = new HashMap<>();
 		settings.put( KEY_TARGET_CHANNEL, DEFAULT_TARGET_CHANNEL );
-		
+		settings.put( KEY_LOGGER, Logger.DEFAULT_LOGGER );
 		return settings;
 	}
 
@@ -185,9 +191,22 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 		boolean ok = true;
 		final StringBuilder errorHolder = new StringBuilder();
 		ok = ok & checkParameter( settings, KEY_TARGET_CHANNEL, Integer.class, errorHolder );
+		// If we have a logger, test it is of the right class.
+				final Object loggerObj = settings.get( KEY_LOGGER );
+				if ( loggerObj != null && !Logger.class.isInstance( loggerObj ) )
+				{
+					errorHolder.append( "Value for parameter " + KEY_LOGGER + " is not of the right class. "
+							+ "Expected " + Logger.class.getName() + ", got " + loggerObj.getClass().getName() + ".\n" );
+					ok = false;
+				}
 		final List< String > mandatoryKeys = new ArrayList<>();
 		mandatoryKeys.add( KEY_TARGET_CHANNEL );
 		ok = ok & checkMapKeys( settings, mandatoryKeys, null, errorHolder );
+		if ( !ok )
+			errorMessage = errorHolder.toString();
+		final List< String > optionalKeys = Arrays.asList(
+				KEY_LOGGER );
+		ok = ok & checkMapKeys( settings, mandatoryKeys, optionalKeys, errorHolder );
 		if ( !ok )
 			errorMessage = errorHolder.toString();
 		return ok;
