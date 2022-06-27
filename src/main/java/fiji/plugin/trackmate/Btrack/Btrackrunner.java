@@ -54,10 +54,12 @@ public class Btrackrunner {
 			final List< Spot > spotsThisFrame;
 			final ImgPlus< T > imageThisFrame = TMUtils.hyperSlice( cropped, 0, t );
 
-			spotsThisFrame = SkelUtils.fromSkel(input, interval, calibration, numThreads); 
+			spotsThisFrame = SkelUtils.fromSkel(imageThisFrame, interval, calibration, numThreads); 
 			
+			spots.put(t + t0, spotsThisFrame);
 			
 		}
 		
+	return spots;	
 	}
 }

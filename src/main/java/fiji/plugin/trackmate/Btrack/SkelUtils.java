@@ -67,39 +67,12 @@ public class SkelUtils {
 			final LabelRegion< Integer > region = iterator.next();
 			final LabelRegionCursor cursor = region.localizingCursor();
 			final int[] cursorPos = new int[ labeling.numDimensions() ];
-			final long[] sum = new long[ 3 ];
-			double quality = Double.NEGATIVE_INFINITY;
-			while ( cursor.hasNext() )
-			{
-				cursor.fwd();
+		
+			
+			// Get skel spots for current time frame
+			
 
-				// Position.
-				cursor.localize( cursorPos );
-				for ( int d = 0; d < sum.length; d++ )
-					sum[ d ] += cursorPos[ d ];
-
-				
-			}
-
-			final double[] pos = new double[ 3 ];
-			for ( int d = 0; d < pos.length; d++ )
-				pos[ d ] = sum[ d ] / ( double ) region.size();
-
-			final double x = calibration[ 0 ] * ( interval.min( 0 ) + pos[ 0 ] );
-			final double y = calibration[ 1 ] * ( interval.min( 1 ) + pos[ 1 ] );
-			final double z = calibration[ 2 ] * ( interval.min( 2 ) + pos[ 2 ] );
-
-			double volume = region.size();
-			for ( int d = 0; d < calibration.length; d++ )
-				if ( calibration[ d ] > 0 )
-					volume *= calibration[ d ];
-
-			final double radius = ( labeling.numDimensions() == 2 )
-					? Math.sqrt( volume / Math.PI )
-					: Math.pow( 3. * volume / ( 4. * Math.PI ), 1. / 3. );
-			spots.add( new Spot( x, y, z, radius, quality ) );
 		}
-
 		return spots;
 	}
 
