@@ -13,7 +13,7 @@ public abstract class BtrackDetectorBaseConfigurationPanel extends Configuration
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final ImageIcon ICON = new ImageIcon( getResource( "images/kapoorlogo.png" ) );
+	protected static final ImageIcon ICON = new ImageIcon( getResource( "images/btracklogo.png" ) );
 
 	protected final Settings settings;
 

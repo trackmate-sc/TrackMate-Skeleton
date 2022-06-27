@@ -1,8 +1,11 @@
 package fiji.plugin.trackmate.Btrack;
 
+import java.io.IOException;
+
 import fiji.plugin.trackmate.SpotCollection;
 import fiji.plugin.trackmate.detection.SpotGlobalDetector;
 import net.imagej.ImgPlus;
+import net.imagej.axis.Axes;
 import net.imglib2.Interval;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;
@@ -20,12 +23,15 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 	
 	protected String baseErrorMessage;
 	
+	protected String errorMessage;
+	
+	protected long processingTime;
+	
 	protected SpotCollection spots;
 	
 	public BtrackDetector(final ImgPlus< T > img,
 			final Interval interval,
 			final double[] calibration) {
-		
 		    this.img = img;
 		    this.interval = interval;
 		    this.calibration = calibration;
@@ -35,32 +41,49 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 	
 	@Override
 	public SpotCollection getResult() {
-		// TODO Auto-generated method stub
-		return null;
+		return spots;
 	}
 
 	@Override
 	public boolean checkInput() {
-		// TODO Auto-generated method stub
-		return false;
+		if ( null == img )
+		{
+			errorMessage = baseErrorMessage + "Image is null.";
+			return false;
+		}
+	
+		return true;
 	}
 
 	@Override
 	public boolean process() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		final long start = System.currentTimeMillis();
+		
+		
+		try {
+			spots = Btrackrunner.run(img, interval, calibration);
+		} catch (IOException e) {
+		
+			e.printStackTrace();
+		}
+		
+		
+		final long end = System.currentTimeMillis();
+		this.processingTime = end - start;
+
+		
+		return true;
 	}
 
 	@Override
 	public String getErrorMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		return errorMessage;
 	}
 
 	@Override
 	public long getProcessingTime() {
-		// TODO Auto-generated method stub
-		return 0;
+		return processingTime;
 	}
 
 }

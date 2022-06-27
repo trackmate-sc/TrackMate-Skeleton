@@ -156,36 +156,6 @@ public class BtrackDetectorConfigurationPanel extends BtrackDetectorBaseConfigur
 
 		sliderChannel.addChangeListener( l -> labelChannel.setText( "" + sliderChannel.getValue() ) );
 
-		/*
-		 * Model file.
-		 */
-
-		final JLabel lblCusstomModelFile = new JLabel( "ilastik file:" );
-		lblCusstomModelFile.setFont( FONT );
-		final GridBagConstraints gbc_lblCusstomModelFile = new GridBagConstraints();
-		gbc_lblCusstomModelFile.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_lblCusstomModelFile.insets = new Insets( 0, 5, 0, 5 );
-		gbc_lblCusstomModelFile.gridx = 0;
-		gbc_lblCusstomModelFile.gridy = 4;
-		add( lblCusstomModelFile, gbc_lblCusstomModelFile );
-
-		
-		
-
-		/*
-		 * Class index.
-		 */
-
-		
-
-		
-
-		
-
-		/*
-		 * Proba threshold.
-		 */
-
 		
 
 		/*

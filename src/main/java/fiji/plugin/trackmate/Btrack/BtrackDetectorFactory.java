@@ -73,7 +73,7 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 
 	/** An html information text. */
 	public static final String INFO_TEXT = "<html>"
-			+ "This detector relies on skeletonization to detect end points of integer labelled regions."
+			+ "Btrack detector relies on skeletonization to detect end points of integer labelled regions."
 			+ "<p>"
 			+ "And for this detector to work, the 'Btrack' update site "
 			+ "must be activated in your Fiji installation. "
@@ -185,7 +185,11 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 		boolean ok = true;
 		final StringBuilder errorHolder = new StringBuilder();
 		ok = ok & checkParameter( settings, KEY_TARGET_CHANNEL, Integer.class, errorHolder );
-
+		final List< String > mandatoryKeys = new ArrayList<>();
+		mandatoryKeys.add( KEY_TARGET_CHANNEL );
+		ok = ok & checkMapKeys( settings, mandatoryKeys, null, errorHolder );
+		if ( !ok )
+			errorMessage = errorHolder.toString();
 		return ok;
 	}
 
