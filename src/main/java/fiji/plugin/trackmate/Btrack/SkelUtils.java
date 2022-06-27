@@ -78,11 +78,6 @@ public class SkelUtils {
 
 			SkeletonAnalyzer<BitType> skelanalyze = new SkeletonAnalyzer<BitType>(skeleton, ij.op());
 			RandomAccessibleInterval<BitType> Ends = skelanalyze.getEndpoints();
-			RandomAccessibleInterval<BitType> Branches = skelanalyze.getBranchpoints();
-
-			Cursor<BitType> skeletoncursor = Views.iterable(skeleton).localizingCursor();
-
-			
 			Cursor<BitType> skelcursor = Views.iterable(Ends).localizingCursor();
 			while (skelcursor.hasNext()) {
 
