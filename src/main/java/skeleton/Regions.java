@@ -214,10 +214,10 @@ public abstract class Regions {
 	}
 
 	public static <T extends RealType<T> & NativeType<T>> ImgLabeling<Integer, IntType> asImgLabeling(
-			RandomAccessibleInterval<T> masks, ConnectedComponents.StructuringElement structuringElement) {
+			RandomAccessibleInterval<T> input, ConnectedComponents.StructuringElement structuringElement) {
 
-		RandomAccessibleInterval<IntType> labelImg = ArrayImgs.ints(Intervals.dimensionsAsLongArray(masks));
-		labelImg = Transforms.getWithAdjustedOrigin(masks, labelImg);
+		RandomAccessibleInterval<IntType> labelImg = ArrayImgs.ints(Intervals.dimensionsAsLongArray(input));
+		labelImg = Transforms.getWithAdjustedOrigin(input, labelImg);
 		final ImgLabeling<Integer, IntType> imgLabeling = new ImgLabeling<>(labelImg);
 
 		final java.util.Iterator<Integer> labelCreator = new java.util.Iterator<Integer>() {
@@ -235,7 +235,7 @@ public abstract class Regions {
 		};
 
 		final RandomAccessibleInterval<UnsignedIntType> unsignedIntTypeRandomAccessibleInterval = Converters
-				.convert(masks, (i, o) -> o.set(i.getRealDouble() > 0 ? 1 : 0), new UnsignedIntType());
+				.convert(input, (i, o) -> o.set(i.getRealDouble() > 0 ? 1 : 0), new UnsignedIntType());
 
 		ConnectedComponents.labelAllConnectedComponents(Views.extendBorder(unsignedIntTypeRandomAccessibleInterval),
 				imgLabeling, labelCreator, structuringElement);

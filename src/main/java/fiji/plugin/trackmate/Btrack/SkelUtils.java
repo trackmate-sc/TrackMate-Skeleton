@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import fiji.plugin.trackmate.Spot;
+import fiji.plugin.trackmate.detection.DetectionUtils;
 import fiji.plugin.trackmate.detection.MaskUtils;
 import net.imagej.ops.OpService;
 import net.imglib2.Cursor;
@@ -14,6 +15,7 @@ import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.RealLocalizable;
 import net.imglib2.RealPoint;
+import net.imglib2.algorithm.labeling.ConnectedComponents;
 import net.imglib2.converter.Converter;
 import net.imglib2.converter.Converters;
 import net.imglib2.img.ImgFactory;
@@ -22,6 +24,7 @@ import net.imglib2.roi.labeling.ImgLabeling;
 import net.imglib2.roi.labeling.LabelRegion;
 import net.imglib2.roi.labeling.LabelRegionCursor;
 import net.imglib2.roi.labeling.LabelRegions;
+import net.imglib2.type.NativeType;
 import net.imglib2.type.logic.BitType;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.IntType;
@@ -29,6 +32,7 @@ import net.imglib2.util.Util;
 import net.imglib2.view.IntervalView;
 import net.imglib2.view.Views;
 import net.imagej.ImageJ;
+import skeleton.Regions;
 import skeleton.SkeletonAnalyzer;
 import skeleton.SkeletonCreator;
 
@@ -56,8 +60,8 @@ public class SkelUtils {
 	 *            the image in which to read the quality value.
 	 * @return a list of spots, without ROI.
 	 */
-	public static < T extends RealType< T >, R extends RealType< R > > List< Spot > fromSkel(
-			final RandomAccessible< T > input,
+	public static <T extends RealType<T> & NativeType<T>> List< Spot > fromSkel(
+			final RandomAccessibleInterval< T > input,
 			final Interval interval,
 			final double[] calibration,
 			final int numThreads)
@@ -65,12 +69,16 @@ public class SkelUtils {
 		
 		
 		
+	
+			
+		final ImgLabeling< Integer, IntType > imgLabeling  = Regions.asImgLabeling(input,
+				ConnectedComponents.StructuringElement.FOUR_CONNECTED );
+			
 		
-		// Get labeling from mask.
-		final ImgLabeling< Integer, IntType > imgLabeling = MaskUtils.toLabeling( input, interval, 0, numThreads );
 	
 		ImageJ ij = new ImageJ();
 		SkeletonCreator<BitType> skelmake = new SkeletonCreator<BitType>(imgLabeling, ij.op());
+		skelmake.run();
 		ArrayList<RandomAccessibleInterval<BitType>> skels =  skelmake.getSkeletons();
 		ArrayList<RealLocalizable> endPoints = new ArrayList<RealLocalizable>();
 		final List< Spot > spots = new ArrayList<>(  );

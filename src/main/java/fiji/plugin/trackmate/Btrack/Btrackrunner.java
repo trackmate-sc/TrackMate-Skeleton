@@ -52,7 +52,7 @@ public class Btrackrunner {
 		for ( int t = 0; t < cropped.dimension( timeIndex ); t++ )
 		{
 			final List< Spot > spotsThisFrame;
-			final ImgPlus< T > imageThisFrame = TMUtils.hyperSlice( cropped, 0, t );
+			final RandomAccessibleInterval< T > imageThisFrame = TMUtils.hyperSlice( cropped, 0, t );
 
 			spotsThisFrame = SkelUtils.fromSkel(imageThisFrame, interval, calibration, numThreads); 
 			
