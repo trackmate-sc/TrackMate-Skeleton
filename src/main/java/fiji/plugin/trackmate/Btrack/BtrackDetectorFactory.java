@@ -45,6 +45,8 @@ import org.scijava.plugin.Plugin;
 import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Model;
 import fiji.plugin.trackmate.Settings;
+import fiji.plugin.trackmate.detection.LabelImageDetector;
+import fiji.plugin.trackmate.detection.SpotDetector;
 import fiji.plugin.trackmate.detection.SpotDetectorFactory;
 import fiji.plugin.trackmate.detection.SpotGlobalDetector;
 import fiji.plugin.trackmate.detection.SpotGlobalDetectorFactory;
@@ -53,13 +55,17 @@ import fiji.plugin.trackmate.io.IOUtils;
 import fiji.plugin.trackmate.util.TMUtils;
 import net.imagej.ImgPlus;
 import net.imagej.axis.Axes;
+import net.imagej.ops.MetadataUtil;
 import net.imglib2.Interval;
+import net.imglib2.RandomAccessibleInterval;
+import net.imglib2.img.ImgView;
 import net.imglib2.img.display.imagej.ImgPlusViews;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;
+import net.imglib2.view.Views;
 
 @Plugin( type = SpotDetectorFactory.class )
-public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > implements SpotGlobalDetectorFactory< T >
+public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T >> implements SpotDetectorFactory< T >
 {
 
 	/*
@@ -95,36 +101,7 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 	
 
 
-	/*
-	 * METHODS
-	 */
-
-	@Override
-	public SpotGlobalDetector< T > getDetector( final Interval interval )
-	{
-		final double[] calibration = TMUtils.getSpatialCalibration( img );
 	
-		final ImgPlus< T > imFrame = prepareImg();
-		
-        
-		final Logger logger = ( Logger ) settings.get( KEY_LOGGER );
-		final BtrackDetector< T > detector = new BtrackDetector<>(
-				imFrame,
-				interval,
-				calibration,
-				logger);
-		return detector;
-	}
-
-	@Override
-	public boolean forbidMultithreading()
-	{
-		/*
-		 * We want to run one frame after another, because the inference for one
-		 * frame takes all the resources anyway.
-		 */
-		return true;
-	}
 
 	@Override
 	public boolean setTarget( final ImgPlus< T > img, final Map< String, Object > settings )
@@ -268,5 +245,19 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 	public BtrackDetectorFactory< T > copy()
 	{
 		return new BtrackDetectorFactory<>();
+	}
+
+	@Override
+	public SpotDetector<T> getDetector(Interval interval, int frame) {
+	
+		final ImgPlus< T > imageThisFrame = TMUtils.hyperSlice( prepareImg(), 0, frame );
+		final double[] calibration = TMUtils.getSpatialCalibration( img );
+		final BtrackDetector< T > detector = new BtrackDetector<T>(
+				imageThisFrame,
+				interval,
+				calibration);
+		
+		return detector;
+		
 	}
 }

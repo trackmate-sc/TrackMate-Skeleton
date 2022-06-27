@@ -98,7 +98,7 @@ public class SkelUtils {
 
 					final double x = calibration[ 0 ] * ( interval.min( 0 ) + addPoint.getDoublePosition(0) );
 					final double y = calibration[ 1 ] * ( interval.min( 1 ) + addPoint.getDoublePosition(1) );
-					double z = calibration[ 2 ] * ( interval.min( 2 ) );
+					double z = 0;
 					if(addPoint.numDimensions() > 2 ) {
 					 z = calibration[ 2 ] * ( interval.min( 2 ) + addPoint.getDoublePosition(2) ); 
 					}

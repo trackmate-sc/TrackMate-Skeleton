@@ -1,9 +1,14 @@
 package fiji.plugin.trackmate.Btrack;
 
 import java.io.IOException;
+import java.util.List;
+
+import org.scijava.Cancelable;
 
 import fiji.plugin.trackmate.Logger;
+import fiji.plugin.trackmate.Spot;
 import fiji.plugin.trackmate.SpotCollection;
+import fiji.plugin.trackmate.detection.SpotDetector;
 import fiji.plugin.trackmate.detection.SpotGlobalDetector;
 import net.imagej.ImgPlus;
 import net.imagej.axis.Axes;
@@ -11,7 +16,7 @@ import net.imglib2.Interval;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;
 
-public class BtrackDetector< T extends RealType< T > & NativeType< T > > implements SpotGlobalDetector< T > {
+public class BtrackDetector< T extends RealType< T > & NativeType< T > > implements SpotDetector< T > {
 	
 	
 	private final static String BASE_ERROR_MESSAGE = "BtrackDetector: ";
@@ -26,29 +31,22 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 	
 	protected String errorMessage;
 	
-	private final Logger logger;
 	
 	protected long processingTime;
 	
-	protected SpotCollection spots;
+	protected List<Spot> spots;
 	
 	public BtrackDetector(final ImgPlus< T > img,
 			final Interval interval,
-			final double[] calibration,
-			final Logger logger ) {
+			final double[] calibration ) {
 		    this.img = img;
 		    this.interval = interval;
 		    this.calibration = calibration;
-		    this.logger = ( logger == null ) ? Logger.VOID_LOGGER : logger;
 		    this.baseErrorMessage = BASE_ERROR_MESSAGE;
 		
 	}
 	
-	@Override
-	public SpotCollection getResult() {
-		return spots;
-	}
-
+	
 	@Override
 	public boolean checkInput() {
 		if ( null == img )
@@ -66,12 +64,8 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 		final long start = System.currentTimeMillis();
 		
 		
-		try {
-			spots = Btrackrunner.run(img, interval, calibration, logger);
-		} catch (IOException e) {
-		
-			e.printStackTrace();
-		}
+	
+			spots = Btrackrunner.run(img, interval, calibration);
 		
 		
 		final long end = System.currentTimeMillis();
@@ -89,6 +83,12 @@ public class BtrackDetector< T extends RealType< T > & NativeType< T > > impleme
 	@Override
 	public long getProcessingTime() {
 		return processingTime;
+	}
+
+
+	@Override
+	public List<Spot> getResult() {
+		return spots;
 	}
 
 }
