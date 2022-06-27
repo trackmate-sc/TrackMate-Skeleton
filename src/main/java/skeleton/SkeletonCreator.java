@@ -7,6 +7,7 @@ import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.algorithm.labeling.ConnectedComponents;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.roi.labeling.ImgLabeling;
+import net.imglib2.roi.labeling.LabelRegion;
 import net.imglib2.type.NativeType;
 import net.imglib2.type.logic.BitType;
 import net.imglib2.type.numeric.RealType;
@@ -15,14 +16,14 @@ import net.imglib2.type.numeric.real.FloatType;
 
 public class SkeletonCreator<T extends RealType<T> & NativeType<T>> {
 
-	final RandomAccessibleInterval<BitType> mask;
+	final ImgLabeling< Integer, IntType > imgLabeling;
 	private final OpService opService;
 
 	private ArrayList<RandomAccessibleInterval<BitType>> skeletons;
 	private int closingRadius = 0;
 
-	public SkeletonCreator(RandomAccessibleInterval<BitType> mask, OpService opService) {
-		this.mask = mask;
+	public SkeletonCreator(ImgLabeling< Integer, IntType > imgLabeling, OpService opService) {
+		this.imgLabeling = imgLabeling;
 		this.opService = opService;
 	}
 
@@ -34,13 +35,9 @@ public class SkeletonCreator<T extends RealType<T> & NativeType<T>> {
 
 		skeletons = new ArrayList<>();
 
-		final ImgLabeling<Integer, IntType> imgLabeling = Regions.asImgLabeling(mask,
-				ConnectedComponents.StructuringElement.FOUR_CONNECTED );
+		
 
-		final RandomAccessibleInterval<BitType> skeletons = Algorithms.createObjectSkeletons(imgLabeling, closingRadius, // TODO:
-																															// Make
-																															// a
-																															// parameter
+		final RandomAccessibleInterval<BitType> skeletons = Algorithms.createObjectSkeletons(imgLabeling, closingRadius, 
 				opService);
 		this.skeletons.add(skeletons);
 	}

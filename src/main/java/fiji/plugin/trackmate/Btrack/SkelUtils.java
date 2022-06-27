@@ -6,18 +6,31 @@ import java.util.List;
 
 import fiji.plugin.trackmate.Spot;
 import fiji.plugin.trackmate.detection.MaskUtils;
+import net.imagej.ops.OpService;
+import net.imglib2.Cursor;
 import net.imglib2.Interval;
 import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
+import net.imglib2.RealLocalizable;
+import net.imglib2.RealPoint;
+import net.imglib2.converter.Converter;
+import net.imglib2.converter.Converters;
+import net.imglib2.img.ImgFactory;
+import net.imglib2.img.cell.CellImgFactory;
 import net.imglib2.roi.labeling.ImgLabeling;
 import net.imglib2.roi.labeling.LabelRegion;
 import net.imglib2.roi.labeling.LabelRegionCursor;
 import net.imglib2.roi.labeling.LabelRegions;
+import net.imglib2.type.logic.BitType;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.IntType;
+import net.imglib2.util.Util;
 import net.imglib2.view.IntervalView;
 import net.imglib2.view.Views;
+import net.imagej.ImageJ;
+import skeleton.SkeletonAnalyzer;
+import skeleton.SkeletonCreator;
 
 public class SkelUtils {
 	
@@ -47,7 +60,6 @@ public class SkelUtils {
 			final RandomAccessible< T > input,
 			final Interval interval,
 			final double[] calibration,
-			
 			final int numThreads)
 	{
 		
@@ -55,24 +67,36 @@ public class SkelUtils {
 		
 		
 		// Get labeling from mask.
-		final ImgLabeling< Integer, IntType > labeling = MaskUtils.toLabeling( input, interval, 0, numThreads );
+		final ImgLabeling< Integer, IntType > imgLabeling = MaskUtils.toLabeling( input, interval, 0, numThreads );
+	
+		ImageJ ij = new ImageJ();
+		SkeletonCreator<BitType> skelmake = new SkeletonCreator<BitType>(imgLabeling, ij.op());
+		ArrayList<RandomAccessibleInterval<BitType>> skels =  skelmake.getSkeletons();
+		ArrayList<RealLocalizable> endPoints = new ArrayList<RealLocalizable>();
+		for (RandomAccessibleInterval<BitType> skeleton : skels) {
 
-		
-		// Parse each component.
-		final LabelRegions< Integer > regions = new LabelRegions<>( labeling );
-		final Iterator< LabelRegion< Integer > > iterator = regions.iterator();
-		final List< Spot > spots = new ArrayList<>( regions.getExistingLabels().size() );
-		while ( iterator.hasNext() )
-		{
-			final LabelRegion< Integer > region = iterator.next();
-			final LabelRegionCursor cursor = region.localizingCursor();
-			final int[] cursorPos = new int[ labeling.numDimensions() ];
-		
-			
-			// Get skel spots for current time frame
-			
+			SkeletonAnalyzer<BitType> skelanalyze = new SkeletonAnalyzer<BitType>(skeleton, ij.op());
+			RandomAccessibleInterval<BitType> Ends = skelanalyze.getEndpoints();
+			RandomAccessibleInterval<BitType> Branches = skelanalyze.getBranchpoints();
 
+			Cursor<BitType> skeletoncursor = Views.iterable(skeleton).localizingCursor();
+
+			
+			Cursor<BitType> skelcursor = Views.iterable(Ends).localizingCursor();
+			while (skelcursor.hasNext()) {
+
+				skelcursor.next();
+
+				RealPoint addPoint = new RealPoint(skelcursor);
+				if (skelcursor.get().getInteger() > 0) {
+
+					endPoints.add(addPoint);
+
+				}
+
+			}
 		}
+		
 		return spots;
 	}
 
