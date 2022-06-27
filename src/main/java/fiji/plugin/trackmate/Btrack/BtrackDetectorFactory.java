@@ -69,7 +69,7 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T > > 
 	public static final String DETECTOR_KEY = "BTRACK_DETECTOR";
 
 	/** The pretty name of the target detector. */
-	public static final String NAME = "Btrack detector";
+	public static final String NAME = "Btrack";
 
 	/** An html information text. */
 	public static final String INFO_TEXT = "<html>"

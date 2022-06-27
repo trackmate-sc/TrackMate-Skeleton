@@ -69,12 +69,6 @@ public class BtrackDetectorConfigurationPanel extends BtrackDetectorBaseConfigur
 
 	private final JSlider sliderChannel;
 
-
-	private final JTextField modelFileTextField;
-
-	private final JButton btnBrowse;
-
-
 	protected final PrefService prefService;
 
 	/**
@@ -175,65 +169,22 @@ public class BtrackDetectorConfigurationPanel extends BtrackDetectorBaseConfigur
 		gbc_lblCusstomModelFile.gridy = 4;
 		add( lblCusstomModelFile, gbc_lblCusstomModelFile );
 
-		btnBrowse = new JButton( "Browse" );
-		btnBrowse.setFont( FONT );
-		final GridBagConstraints gbc_btnBrowse = new GridBagConstraints();
-		gbc_btnBrowse.insets = new Insets( 5, 0, 0, 5 );
-		gbc_btnBrowse.anchor = GridBagConstraints.SOUTHEAST;
-		gbc_btnBrowse.gridwidth = 2;
-		gbc_btnBrowse.gridx = 1;
-		gbc_btnBrowse.gridy = 4;
-		add( btnBrowse, gbc_btnBrowse );
-
-		modelFileTextField = new JTextField( "" );
-		modelFileTextField.setFont( SMALL_FONT );
-		final GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 3;
-		gbc_textField.insets = new Insets( 0, 5, 5, 5 );
-		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 5;
-		add( modelFileTextField, gbc_textField );
-		modelFileTextField.setColumns( 10 );
+		
+		
 
 		/*
 		 * Class index.
 		 */
 
-		final JLabel lblClassId = new JLabel( "Class index:" );
-		lblClassId.setFont( SMALL_FONT );
-		final GridBagConstraints gbc_lblOverlapThreshold = new GridBagConstraints();
-		gbc_lblOverlapThreshold.anchor = GridBagConstraints.EAST;
-		gbc_lblOverlapThreshold.insets = new Insets( 5, 5, 5, 5 );
-		gbc_lblOverlapThreshold.gridx = 0;
-		gbc_lblOverlapThreshold.gridy = 6;
-		add( lblClassId, gbc_lblOverlapThreshold );
-
 		
 
-		final JLabel labelClassId = new JLabel( "1" );
-		labelClassId.setHorizontalAlignment( SwingConstants.CENTER );
-		labelClassId.setFont( new Font( "Arial", Font.PLAIN, 10 ) );
-		final GridBagConstraints gbc_labelClassId = new GridBagConstraints();
-		gbc_labelClassId.insets = new Insets( 0, 0, 5, 0 );
-		gbc_labelClassId.gridx = 2;
-		gbc_labelClassId.gridy = 6;
-		add( labelClassId, gbc_labelClassId );
+		
 
 		
 
 		/*
 		 * Proba threshold.
 		 */
-
-		final JLabel lblScoreTreshold = new JLabel( "Threshold on probability:" );
-		lblScoreTreshold.setFont( SMALL_FONT );
-		final GridBagConstraints gbc_lblScoreTreshold = new GridBagConstraints();
-		gbc_lblScoreTreshold.anchor = GridBagConstraints.EAST;
-		gbc_lblScoreTreshold.insets = new Insets( 5, 5, 5, 5 );
-		gbc_lblScoreTreshold.gridx = 0;
-		gbc_lblScoreTreshold.gridy = 7;
-		add( lblScoreTreshold, gbc_lblScoreTreshold );
 
 		
 
