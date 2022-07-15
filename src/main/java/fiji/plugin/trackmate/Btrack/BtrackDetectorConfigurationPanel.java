@@ -96,7 +96,7 @@ public class BtrackDetectorConfigurationPanel extends BtrackDetectorBaseConfigur
 		gbc_lblSettingsForDetector.gridy = 0;
 		add( lblSettingsForDetector, gbc_lblSettingsForDetector );
 
-		final JLabel lblDetector = new JLabel( TITLE, ICON, JLabel.RIGHT );
+		final JLabel lblDetector = new JLabel( TITLE, ICON, JLabel.LEFT );
 		lblDetector.setFont( BIG_FONT );
 		lblDetector.setHorizontalAlignment( SwingConstants.CENTER );
 		final GridBagConstraints gbc_lblDetector = new GridBagConstraints();

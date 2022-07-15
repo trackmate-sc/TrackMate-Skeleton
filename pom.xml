@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>sc.fiji</groupId>
-	<artifactId>BTrack</artifactId>
-	<version>1.0.0</version>
+	<artifactId>TissueTracker</artifactId>
+	<version>1.0.1</version>
 
-	<name>BTrack</name>
+	<name>TissueTracker</name>
 	<description>BTrack module for TrackMate Fiji.</description>
 	<url>https://imagej.net/BTrack</url>
 	<inceptionYear>2022</inceptionYear>
