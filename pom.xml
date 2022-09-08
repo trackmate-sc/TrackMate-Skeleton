@@ -10,16 +10,16 @@
 	</parent>
 
 	<groupId>sc.fiji</groupId>
-	<artifactId>TissueTracker</artifactId>
+	<artifactId>TrackMate-Skeleton</artifactId>
 	<version>1.0.1</version>
 
-	<name>TissueTracker</name>
-	<description>BTrack module for TrackMate Fiji.</description>
-	<url>https://imagej.net/BTrack</url>
+	<name>TrackMate-Skeleton</name>
+	<description>TrackMate detector based on Skeletonization</description>
+	<url>https://github.com/trackmate-sc/TrackMate-Skeleton</url>
 	<inceptionYear>2022</inceptionYear>
-	<organization>
-		<name>Fiji</name>
-		<url>https://fiji.sc/</url>
+<organization>
+		<name>TrackMate</name>
+		<url>https://github.com/trackmate-sc</url>
 	</organization>
 	<licenses>
 		<license>
@@ -53,9 +53,8 @@
 
 <roles>
                                 <role>founder</role>
-                                <role>debugger</role>
-                                <role>reviewer</role>
-                                <role>support</role>
+                               
+                               
                                 
                         </roles>
 		</contributor>
@@ -69,23 +68,23 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:git://github.com/Kapoorlabs-CAPED/BTrack</connection>
-		<developerConnection>scm:git:git@github.com/Kapoorlabs-CAPED/BTrack</developerConnection>
+		<connection>scm:git:git://github.com/trackmate-sc/TrackMate-Skeleton</connection>
+		<developerConnection>scm:git:git@github.com:trackmate-sc/TrackMate-Skeleton</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/Kapoorlabs-CAPED/BTrack</url>
+		<url>https://github.com/trackmate-sc/TrackMate-Skeleton</url>
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/Kapoorlabs-CAPED/BTrack/issues</url>
+		<url>https://github.com/trackmate-sc/TrackMate-Skeleton/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/kapoorlab/BTrack</url>
+		<system>GitHub Actions</system>
+		<url>https://github.com/trackmate-sc/TrackMate-Skeleton</url>
 	</ciManagement>
 
 	<properties>
 		<license.licenseName>gpl_v3</license.licenseName>
-		<license.copyrightOwners>BTrack developers.</license.copyrightOwners>
+		<license.copyrightOwners>TrackMate-Skeleton developers.</license.copyrightOwners>
 
 		
 
