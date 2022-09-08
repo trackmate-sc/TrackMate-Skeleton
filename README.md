@@ -1,2 +1,2 @@
-# BTrack
-TrackMate module for skeletonization of tissue end points and tracking
+# TrackMate-Skeleton
+A TrackMate detector for creating SpotCollection using skeletonization of an Integer/Binary segmented image for tracking growing tissue branches.
