@@ -53,11 +53,8 @@ public class SkelUtils {
 	 *            the interval in the input image to analyze.
 	 * @param calibration
 	 *            the physical calibration.
-	
 	 * @param numThreads
 	 *            how many threads to use for multithreaded computation.
-	 * @param qualityImage
-	 *            the image in which to read the quality value.
 	 * @return a list of spots, without ROI.
 	 */
 	public static <T extends RealType<T> & NativeType<T>> List< Spot > fromSkel(
