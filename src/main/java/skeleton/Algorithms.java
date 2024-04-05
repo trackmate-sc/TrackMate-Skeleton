@@ -202,7 +202,7 @@ public class Algorithms {
 			LabelRegion<Integer> centralObjectRegion, long[] dimensions) {
 		final Img<UnsignedByteType> centralObjectImg = ArrayImgs.unsignedBytes(dimensions);
 
-		final Cursor<Void> regionCursor = centralObjectRegion.cursor();
+		final Cursor<Void> regionCursor = centralObjectRegion.inside().cursor();
 		final RandomAccess<UnsignedByteType> access = centralObjectImg.randomAccess();
 		while (regionCursor.hasNext()) {
 			regionCursor.fwd();
@@ -215,7 +215,7 @@ public class Algorithms {
 	public static Img<BitType> createMaskFromLabelRegion(LabelRegion<Integer> region, long[] dimensions) {
 		final Img<BitType> centralObjectImg = ArrayImgs.bits(dimensions);
 
-		final Cursor<Void> regionCursor = region.cursor();
+		final Cursor<Void> regionCursor = region.inside().cursor();
 		final RandomAccess<BitType> access = centralObjectImg.randomAccess();
 		while (regionCursor.hasNext()) {
 			regionCursor.fwd();
@@ -838,7 +838,7 @@ public class Algorithms {
 			int label, LabelRegions<Integer> splitObjects) {
 		final long[] regionOffset = Intervals.minAsLongArray(labelRegions.getLabelRegion(label));
 		LabelRegion watershed = splitObjects.getLabelRegion(-1);
-		final LabelRegionCursor cursor = watershed.cursor();
+		final Cursor< Void > cursor = watershed.inside().cursor();
 		final RandomAccess<BitType> maskRandomAccess = mask.randomAccess();
 		long[] position = new long[watershed.numDimensions()];
 		while (cursor.hasNext()) {
