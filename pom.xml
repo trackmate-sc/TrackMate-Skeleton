@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>34.0.0</version>
+		<version>37.0.0</version>
 		<relativePath />
 	</parent>
 
@@ -84,6 +84,15 @@
 	<properties>
 		<license.licenseName>gpl_v3</license.licenseName>
 		<license.copyrightOwners>TrackMate developers.</license.copyrightOwners>
+
+		<imglib2.version>7.0.0-SNAPSHOT</imglib2.version>
+		<imglib2-realtransform.version>4.0.3-SNAPSHOT</imglib2-realtransform.version>
+		<imglib2-roi.version>0.15.0-SNAPSHOT</imglib2-roi.version>
+		<imglib2-cache.version>1.0.0-beta-18-SNAPSHOT</imglib2-cache.version>
+		<imglib2-algorithm.version>0.14.1-SNAPSHOT</imglib2-algorithm.version>
+		<imagej-common.version>2.0.6-SNAPSHOT</imagej-common.version>
+		<imagej-ops.version>2.0.1-SNAPSHOT</imagej-ops.version>
+		<enforcer.skip>true</enforcer.skip>
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
 		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>

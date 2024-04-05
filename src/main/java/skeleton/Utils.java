@@ -789,7 +789,7 @@ public class Utils {
 	}
 
 	public static void drawObject(RandomAccessibleInterval<IntType> img, LabelRegion labelRegion, int value) {
-		final Cursor<Void> regionCursor = labelRegion.cursor();
+		final Cursor<Void> regionCursor = labelRegion.inside().cursor();
 		final RandomAccess<IntType> access = img.randomAccess();
 		BitType bitTypeTrue = new BitType(true);
 		while (regionCursor.hasNext()) {

@@ -86,7 +86,7 @@ public abstract class Regions {
 		rai = Transforms.getWithAdjustedOrigin(labelRegion, rai);
 		final RandomAccess<BitType> randomAccess = rai.randomAccess();
 
-		final LabelRegionCursor cursor = labelRegion.cursor();
+		final Cursor< Void > cursor = labelRegion.inside().cursor();
 
 		while (cursor.hasNext()) {
 			cursor.fwd();
@@ -100,7 +100,7 @@ public abstract class Regions {
 	public static void drawRegionInMask(LabelRegion labelRegion, RandomAccessibleInterval<BitType> mask) {
 		final RandomAccess<BitType> maskAccess = mask.randomAccess();
 
-		final LabelRegionCursor cursor = labelRegion.cursor();
+		final Cursor< Void > cursor = labelRegion.inside().cursor();
 
 		while (cursor.hasNext()) {
 			cursor.fwd();
@@ -111,7 +111,7 @@ public abstract class Regions {
 
 	public static long size(LabelRegion labelRegion) {
 
-		final LabelRegionCursor cursor = labelRegion.cursor();
+		final Cursor< Void > cursor = labelRegion.inside().cursor();
 
 		long size = 0;
 		while (cursor.hasNext()) {
@@ -130,7 +130,7 @@ public abstract class Regions {
 
 		final RandomAccess<T> imageRandomAccess = image.randomAccess();
 		final RandomAccess<T> outputRandomAccess = output.randomAccess();
-		final LabelRegionCursor cursor = labelRegion.cursor();
+		final Cursor< Void > cursor = labelRegion.inside().cursor();
 
 		while (cursor.hasNext()) {
 			cursor.fwd();
@@ -196,7 +196,7 @@ public abstract class Regions {
 
 	private static <R extends RealType<R> & NativeType<R>> void drawRegion(RandomAccessibleInterval<R> img,
 			LabelRegion labelRegion, double value) {
-		final Cursor<Void> regionCursor = labelRegion.cursor();
+		final Cursor<Void> regionCursor = labelRegion.inside().cursor();
 		final RandomAccess<R> access = img.randomAccess();
 		while (regionCursor.hasNext()) {
 			regionCursor.fwd();
@@ -207,7 +207,7 @@ public abstract class Regions {
 
 	private static <T extends RealType<T> & NativeType<T>> void removeRegion(RandomAccessibleInterval<T> img,
 			LabelRegion labelRegion) {
-		final Cursor regionCursor = labelRegion.cursor();
+		final Cursor regionCursor = labelRegion.inside().cursor();
 		final RandomAccess<T> access = img.randomAccess();
 		while (regionCursor.hasNext()) {
 			regionCursor.fwd();
@@ -272,7 +272,7 @@ public abstract class Regions {
 		final RandomAccess<BitType> maskAccess = regionsMask.randomAccess();
 
 		for (LabelRegion region : regions) {
-			final Cursor<Void> regionCursor = region.cursor();
+			final Cursor<Void> regionCursor = region.inside().cursor();
 			while (regionCursor.hasNext()) {
 				regionCursor.fwd();
 				maskAccess.setPosition(regionCursor);
@@ -291,7 +291,7 @@ public abstract class Regions {
 		final RandomAccess<BitType> maskAccess = regionsMask.randomAccess();
 
 		for (LabelRegion region : regions) {
-			final Cursor<Void> regionCursor = region.cursor();
+			final Cursor<Void> regionCursor = region.inside().cursor();
 			while (regionCursor.hasNext()) {
 				regionCursor.fwd();
 				maskAccess.setPosition(regionCursor);
