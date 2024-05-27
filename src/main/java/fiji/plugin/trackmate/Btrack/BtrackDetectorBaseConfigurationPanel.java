@@ -35,13 +35,13 @@ public abstract class BtrackDetectorBaseConfigurationPanel extends Configuration
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final ImageIcon ICON = new ImageIcon( getResource( "images/btracklogo.png" ) );
+	protected static final ImageIcon ICON = createScaledIcon("images/mtrack.png", 100, 100);
+	
 
 	protected final Settings settings;
 
 	protected final Model model;
 	
-
 
 	public BtrackDetectorBaseConfigurationPanel( final Settings settings, final Model model  )
 	{
@@ -57,4 +57,20 @@ public abstract class BtrackDetectorBaseConfigurationPanel extends Configuration
 		return BtrackDetectorFactory.class.getClassLoader().getResource( name );
 	}
 	
+}
+
+
+
+public static ImageIcon createScaledIcon(String path, int width, int height) {
+	// Load the original ImageIcon
+	ImageIcon originalIcon = new ImageIcon(Icons.class.getResource(path));
+	
+	// Get the Image from the ImageIcon
+	Image originalImage = originalIcon.getImage();
+	
+	// Scale the Image to the desired size
+	Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+	
+	// Create a new ImageIcon from the scaled Image
+	return new ImageIcon(scaledImage);
 }
