@@ -81,14 +81,17 @@ public class BtrackDetectorFactory< T extends RealType< T > & NativeType< T >> i
 
 	/** An html information text. */
 	public static final String INFO_TEXT = "<html>"
-			+ "<p>" 
-			+ "Btrack detector relies on skeletonization to detect end points of integer labelled regions."
-			+ "<p>"
-			+ "For this detector to work, the 'Btrack' update site "
-			+ "must be activated in your Fiji installation. "
-			+"<p>"
-			+ "Made by Kapoorlabs"
-			+ "</html>";
+	        + "<p>"
+	        + "This product is a testament to our expertise at KapoorLabs, where we specialize in creating cutting-edge solutions. "
+	        + "We offer bespoke pipeline development services, transforming your developmental biology questions into publishable figures with our advanced computer vision and AI tools. "
+	        + "Leverage our expertise and resources to achieve end-to-end solutions that make your research stand out."
+	        + "</p>"
+	        + "<p><b>Note:</b> The tools and pipelines showcased here represent only a fraction of what we can achieve. "
+	        + "For tailored and comprehensive solutions beyond what was done in the referenced publication, engage with us directly. "
+	        + "Our team is ready to provide the expertise and custom development you need to take your research to the next level. "
+	        + "Visit us at <a href='https://www.kapoorlabs.org/'>KapoorLabs</a>."
+	        + "</p>"
+	        + "</html>";
 
 	/*
 	 * FIELDS
