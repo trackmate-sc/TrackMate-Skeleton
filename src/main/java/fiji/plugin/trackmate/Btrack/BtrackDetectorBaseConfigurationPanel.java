@@ -24,7 +24,7 @@ package fiji.plugin.trackmate.Btrack;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-
+import java.awt.Image;
 import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Model;
 import fiji.plugin.trackmate.Settings;
@@ -56,21 +56,20 @@ public abstract class BtrackDetectorBaseConfigurationPanel extends Configuration
 	{
 		return BtrackDetectorFactory.class.getClassLoader().getResource( name );
 	}
-	
+	public static ImageIcon createScaledIcon(String path, int width, int height) {
+		// Load the original ImageIcon
+		ImageIcon originalIcon = new ImageIcon(getResource(path));
+		
+		// Get the Image from the ImageIcon
+		Image originalImage = originalIcon.getImage();
+		
+		// Scale the Image to the desired size
+		Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		
+		// Create a new ImageIcon from the scaled Image
+		return new ImageIcon(scaledImage);
+	}
 }
 
 
 
-public static ImageIcon createScaledIcon(String path, int width, int height) {
-	// Load the original ImageIcon
-	ImageIcon originalIcon = new ImageIcon(Icons.class.getResource(path));
-	
-	// Get the Image from the ImageIcon
-	Image originalImage = originalIcon.getImage();
-	
-	// Scale the Image to the desired size
-	Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-	
-	// Create a new ImageIcon from the scaled Image
-	return new ImageIcon(scaledImage);
-}
