@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>38.0.1</version>
+		<version>44.0.0</version>
 		<relativePath />
 	</parent>
 
 	<groupId>sc.fiji</groupId>
 	<artifactId>TrackMate-Skeleton</artifactId>
-	<version>2.0.4-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 
 	<name>TrackMate-Skeleton</name>
 	<description>TrackMate detector based on Skeletonization.</description>
@@ -82,15 +82,12 @@
 	</ciManagement>
 
 	<properties>
+		<scijava.jvm.version>8</scijava.jvm.version>
+
 		<license.licenseName>gpl_v3</license.licenseName>
 		<license.copyrightOwners>TrackMate developers.</license.copyrightOwners>
 
-		<imglib2.version>7.1.0</imglib2.version>
-		<imglib2-realtransform.version>4.0.3</imglib2-realtransform.version>
-		<imglib2-roi.version>0.15.0</imglib2-roi.version>
-		<imglib2-cache.version>1.0.0-beta-18</imglib2-cache.version>
-		<imglib2-algorithm.version>0.15.3</imglib2-algorithm.version>
-		<imglib2-ij.version>2.0.2</imglib2-ij.version>
+		<TrackMate.version>8.0.0</TrackMate.version>
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
 		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
